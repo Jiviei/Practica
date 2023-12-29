@@ -4,26 +4,28 @@ const checkSpelling_typo = (md) => {
     var spellingMistakes = [];
     let lines = md.split("\n");
     for (var il = 0; il < lines.length; il++) {
-        let words = lines[il].split(" ");
+        let words = lines[il].split(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/);
         let Idx = 0;
-        for (var iw = 0; iw < words.length; iw++) {
-            if (!dictionary.check(words[iw])) {
-                spellingMistakes.push({
-                    range: {
-                        line: il,
-                        startIdx: Idx,
-                        endIdx: Idx + words[iw].length - 1
-                    },
-                    original: words[iw],
-                    advices: dictionary.suggest(words[iw])
-                });
+        for (var word of words) {
+            if (word != "") {
+                if (!dictionary.check(word)) {
+                    spellingMistakes.push({
+                        range: {
+                            line: il,
+                            startIdx: Idx,
+                            endIdx: Idx + word.length - 1
+                        },
+                        original: word,
+                        advices: dictionary.suggest(word)
+                    });
+                }
             }
-            Idx += words[iw].length + 1;
+            Idx += word.length + 1;
         }
     }
     return spellingMistakes;
 };
-const md = `Очень провильное преложение\nВторая стрчка`;
+const md = `Очень, провильное преложение.\nВторая стрчка!`;
 const spellingMistakes = checkSpelling_typo(md);
 console.log(spellingMistakes);
 //# sourceMappingURL=typo.js.map
