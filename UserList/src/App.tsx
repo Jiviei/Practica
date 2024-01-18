@@ -73,7 +73,7 @@ const UserList: React.FC = () => {
     const [users, setJsonData] = useState<User[]>([]);
 
     useEffect(() => {
-        fetch('users.json')
+        fetch('https://dummyjson.com/users')
             .then(response => response.json())
             .then(data => setJsonData(data.users));
     }, []);
