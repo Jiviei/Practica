@@ -1,0 +1,16 @@
+table td {
+    text-align: center;
+    white-space: nowrap
+}
+.container {
+    display: flex;
+}
+
+.left-column {
+    min-width: 200px;
+}
+
+.checkbox-list {
+    list-style: none;
+    padding: 0;
+}
